@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+		   div {
+		   width: 100px;
+		   height: 100px;
+		   position: absolute;
+		   }
+		   #first{
+		   	left: 20px;
+		   	background-color: red;
+		   }
+		   #second{
+		   	left: 140px;
+		   	background-color: lightgreen;
+		   	
+		   }
+		   #third{
+		   	left: 260px;
+		   	background-color: lightblue;
+		   			   }
+		</style>
+	</head>
+	<body>
+		<div id="first"> 旋转一圈</div>
+		<div id="second">旋转5圈</div>
+		<div id="third">无限旋转</div>
+	</body>
+	
+	  <script type="text/javascript" src="Tween.js">
+	  	
+	  </script>
+	  <script type="text/javascript">
+	  	var first =document.getElementById("first");
+	  	var second =document.getElementById("second");
+	  	var third =document.getElementById("third");
+	  	  
+//	  	  定义三个角度初始量
+	  	  var firstObj = {deg:0,y:0};
+	  	  var secondObj= {deg:0,y:0};
+	  	  var thirdObj = {deg:0,y:0};
+	  	  
+//	  	  定义三个动画
+	  	  var  tween1 = null ;
+	  	  var  tween2 = null ;
+	  	  var  tween3 = null ;
+	  	  
+	  	   init();
+	  	     function init(){ 
+	  	     	 tween1 =initEveryOne(tween1,firstObj, 1,first);
+	  	     	 tween2 =initEveryOne(tween2,secondObj,5,second);
+	  	     	
+	  	     	 tween3 =initEveryOne(tween3,thirdObj,Infinity,third);
+	  	     }
+	  	     function initEveryOne (tween,initdeg,times,obj){
+	  	     	var tween = new TWEEN.Tween(initdeg);
+	  	     	    tween.to({deg:360,y:300},2000);
+	  	     	    tween.repeat(times);
+	  	     	    tween.easing(TWEEN.Easing.Elastic.InOut);
+	  	     	    tween.onUpdate(function(){
+	  	     	    	 rotateallDiv(obj ,initdeg);
+	  	     	    });
+	  	     	    tween.start();
+	  	     	    return tween ;
+	  	   }
+	  	     
+	  	      function rotateallDiv(obj,deg){
+	  	      	  obj.style.webkitTransform ="rotate(" + Math.floor(deg.deg) + "deg)"; 
+                  obj.style.top = deg.y + "px";
+	  	      }
+	  	      
+	  	      animate();
+	  	      function animate(){
+	  	      	requestAnimationFrame(animate);
+	  	      	TWEEN.update();
+	  	      }
+	  	 
+	  	
+	  	
+	  	
+	  </script>
+</html>
